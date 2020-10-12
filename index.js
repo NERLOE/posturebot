@@ -1,6 +1,10 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const config = require("dotenv").config();
+const { config } = require("dotenv");
+
+config({
+  path: __dirname + "/.env",
+});
 
 bot.on("ready", () => {
   console.log(`Botten er klar som ${bot.user.tag}!`);
@@ -66,4 +70,4 @@ function updateBotActivity() {
   });
 }
 
-bot.login(config.TOKEN);
+bot.login(process.env.TOKEN);
