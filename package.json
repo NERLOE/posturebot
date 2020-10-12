@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "NERLOE",
+  "author": "Marcus Nerloe",
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
@@ -14,5 +15,8 @@
     "dotenv": "^8.2.0",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.2.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

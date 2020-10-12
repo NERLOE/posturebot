@@ -1,0 +1,1 @@
+screen -S "Posturebot" -U -m -d npm run start
