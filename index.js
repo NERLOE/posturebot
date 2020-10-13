@@ -1,23 +1,19 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const { config } = require("dotenv");
-
 config({
   path: __dirname + "/.env",
 });
 
 bot.on("ready", () => {
   console.log(`Botten er klar som ${bot.user.tag}!`);
-  // Update server info
   updateBotActivity();
-
   checkPostures();
 });
 
 var lastCheck = null;
 async function checkPostures() {
   bot.guilds.cache.forEach(async (guild) => {
-    // Update nicknames
     const voiceChannels = guild.channels.cache.filter(
       (c) => c.type === "voice"
     );
@@ -35,9 +31,7 @@ async function checkPostures() {
     lastCheck = new Date();
   });
 
-  setTimeout(() => {
-    checkPostures();
-  }, 1000 * 60 * 30);
+  setTimeout(checkPostures, 1000 * 60 * 30);
 }
 
 async function checkPosture(voiceChannel) {
@@ -66,17 +60,20 @@ async function checkPosture(voiceChannel) {
   });
 }
 
+function formatDate(number) {
+  return number >= 10 ? number : "0" + number;
+}
+
 function updateBotActivity() {
-  var d = lastCheck;
-  if (d) {
+  if (lastCheck) {
     let fDate =
-      (d.getDate() >= 10 ? d.getDate() : "0" + d.getDate()) +
+      formatDate(lastCheck.getDate()) +
       "/" +
-      (d.getMonth() >= 10 ? d.getMonth() : "0" + d.getMonth()) +
+      formatDate(lastCheck.getMonth()) +
       " kl. " +
-      d.getHours() +
+      formatDate(lastCheck.getHours()) +
       ":" +
-      d.getMinutes();
+      formatDate(lastCheck.getMinutes());
     bot.user.setActivity("peoples posture...\nLast check: " + fDate, {
       url: "https://minetech.dk",
       type: "WATCHING",
@@ -88,9 +85,7 @@ function updateBotActivity() {
     });
   }
 
-  setTimeout(() => {
-    updateBotActivity();
-  }, 1000 * 10);
+  setTimeout(updateBotActivity, 1000 * 10);
 }
 
 bot.login(process.env.TOKEN);
