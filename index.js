@@ -9,9 +9,7 @@ config({
 bot.on("ready", () => {
   console.log(`Botten er klar som ${bot.user.tag}!`);
   // Update server info
-  setInterval(() => {
-    updateBotActivity();
-  }, 1000 * 10);
+  updateBotActivity();
 
   checkPostures();
 });
@@ -82,6 +80,10 @@ function updateBotActivity() {
     url: "https://minetech.dk",
     type: "WATCHING",
   });
+
+  setTimeout(() => {
+    updateBotActivity();
+  }, 1000 * 10);
 }
 
 bot.login(process.env.TOKEN);
