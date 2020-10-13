@@ -68,18 +68,25 @@ async function checkPosture(voiceChannel) {
 
 function updateBotActivity() {
   var d = lastCheck;
-  let fDate =
-    (d.getDate() >= 10 ? d.getDate() : "0" + d.getDate()) +
-    "/" +
-    (d.getMonth() >= 10 ? d.getMonth() : "0" + d.getMonth()) +
-    " kl. " +
-    d.getHours() +
-    ":" +
-    d.getMinutes();
-  bot.user.setActivity("peoples posture...\nLast check: " + fDate, {
-    url: "https://minetech.dk",
-    type: "WATCHING",
-  });
+  if (d) {
+    let fDate =
+      (d.getDate() >= 10 ? d.getDate() : "0" + d.getDate()) +
+      "/" +
+      (d.getMonth() >= 10 ? d.getMonth() : "0" + d.getMonth()) +
+      " kl. " +
+      d.getHours() +
+      ":" +
+      d.getMinutes();
+    bot.user.setActivity("peoples posture...\nLast check: " + fDate, {
+      url: "https://minetech.dk",
+      type: "WATCHING",
+    });
+  } else {
+    bot.user.setActivity("peoples posture...", {
+      url: "https://minetech.dk",
+      type: "WATCHING",
+    });
+  }
 
   setTimeout(() => {
     updateBotActivity();
