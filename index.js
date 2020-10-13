@@ -9,11 +9,14 @@ config({
 bot.on("ready", () => {
   console.log(`Botten er klar som ${bot.user.tag}!`);
   // Update server info
-  updateBotActivity();
+  setInterval(() => {
+    updateBotActivity();
+  }, 1000 * 10);
 
   checkPostures();
 });
 
+var lastCheck = null;
 async function checkPostures() {
   bot.guilds.cache.forEach(async (guild) => {
     // Update nicknames
@@ -31,6 +34,7 @@ async function checkPostures() {
     }
 
     console.log("The posture check is now finished!");
+    lastCheck = new Date();
   });
 
   setTimeout(() => {
@@ -65,8 +69,18 @@ async function checkPosture(voiceChannel) {
 }
 
 function updateBotActivity() {
-  bot.user.setActivity("Checking peoples posture...", {
+  var d = lastCheck;
+  let fDate =
+    (d.getDate() >= 10 ? d.getDate() : "0" + d.getDate()) +
+    "/" +
+    (d.getMonth() >= 10 ? d.getMonth() : "0" + d.getMonth()) +
+    " kl. " +
+    d.getHours() +
+    ":" +
+    d.getMinutes();
+  bot.user.setActivity("peoples posture...\nLast check: " + fDate, {
     url: "https://minetech.dk",
+    type: "WATCHING",
   });
 }
 
